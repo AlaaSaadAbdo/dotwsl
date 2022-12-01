@@ -1,0 +1,7 @@
+vim.cmd("let g:vim_current_word#highlight_twins = 1")
+vim.cmd("let g:vim_current_word#highlight_current_word = 1")
+vim.cmd("let g:vim_current_word#highlight_delay = 3")
+vim.cmd("let g:vim_current_word#enabled = 1")
+vim.cmd("let g:vim_current_word#highlight_only_in_focused_window = 1")
+vim.cmd("hi CurrentWord ctermbg=232 guibg=#444444")
+vim.cmd("hi CurrentWordTwins ctermbg=237 guibg=#3a3a3a")

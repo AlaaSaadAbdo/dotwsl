@@ -1,0 +1,189 @@
+local exec = vim.api.nvim_command
+local fn, cmd = vim.fn, vim.cmd
+
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+  exec("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  exec("packadd packer.nvim")
+end
+
+cmd("packadd packer.nvim")
+
+cmd("au BufWritePost packages.lua PackerCompile")
+
+local init = {
+  -- Packer can manage itself as an optional plugin
+  "wbthomason/packer.nvim",
+  opt = true,
+}
+
+local lsp = {
+  "nvim-lua/plenary.nvim",
+  "nvim-lua/popup.nvim",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
+  -- "williamboman/nvim-lsp-installer",
+  "tsuyoshicho/vim-efm-langserver-settings", -- trying to use it for linting
+  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+  "nvim-treesitter/nvim-treesitter-refactor",
+  "folke/lsp-colors.nvim",
+  "folke/trouble.nvim",
+  "tami5/lspsaga.nvim",
+  "gfanto/fzf-lsp.nvim",
+  "jose-elias-alvarez/nvim-lsp-ts-utils",
+  "udalov/kotlin-vim",
+}
+
+local git = {
+  "rhysd/conflict-marker.vim",
+  "lewis6991/gitsigns.nvim",
+  "sindrets/diffview.nvim",
+  "TimUntersberger/neogit",
+  "tanvirtin/vgit.nvim",
+}
+
+local misc = {
+  "tweekmonster/startuptime.vim", -- benchmark startup
+  "voldikss/vim-floaterm",
+  "norcalli/nvim-colorizer.lua",
+  "mbbill/undotree",
+  "lukas-reineke/indent-blankline.nvim",
+  "dominikduda/vim_current_word",
+  "ethanholz/nvim-lastplace",
+  "tpope/vim-unimpaired",
+  "AndrewRadev/splitjoin.vim",
+  "ruifm/gitlinker.nvim",
+  {
+    "cshuaimin/ssr.nvim",
+    module = "ssr",
+    -- Calling setup is optional.
+    config = function()
+      require("ssr").setup({
+        min_width = 50,
+        min_height = 5,
+        keymaps = {
+          close = "q",
+          next_match = "n",
+          prev_match = "N",
+          replace_all = "<leader><cr>",
+        },
+      })
+    end,
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    run = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    ft = { "markdown" },
+  },
+  -- {
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").register_lsp_virtual_lines()
+  --   end,
+  --   vim.diagnostic.config({ virtual_lines = false }),
+  -- },
+  "lewis6991/impatient.nvim",
+  "antoinemadec/FixCursorHold.nvim",
+  "simrat39/symbols-outline.nvim",
+}
+
+local text = {
+  "scrooloose/nerdcommenter",
+  "AndrewRadev/tagalong.vim",
+  "machakann/vim-sandwich",
+  "alvan/vim-closetag",
+  "andymass/vim-matchup",
+  "leafOfTree/vim-matchtag",
+  "windwp/nvim-autopairs",
+  "mhartington/formatter.nvim",
+  "vimwiki/vimwiki",
+}
+
+local fzf = {
+  { "junegunn/fzf", run = "./install --all" }, -- Fuzzy Searcher
+  "junegunn/fzf.vim",
+}
+
+local test = {
+  "janko/vim-test",
+}
+
+local themes = {
+  "sainnhe/gruvbox-material",
+}
+
+local ui = {
+  "kyazdani42/nvim-web-devicons",
+  "NTBBloodbath/galaxyline.nvim",
+  "nvim-lualine/lualine.nvim",
+  "kyazdani42/nvim-tree.lua",
+  "akinsho/bufferline.nvim",
+  "p00f/nvim-ts-rainbow", -- this changes the highlight of definitions and todo to black text, maybe it should be loaded before the colorscheme
+  -- "yamatsum/nvim-nonicons",
+}
+
+local lang = {
+  "hashivim/vim-terraform",
+  "cespare/vim-toml",
+}
+
+local completion = {
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-nvim-lua",
+  "hrsh7th/cmp-vsnip",
+  "hrsh7th/vim-vsnip",
+  "hrsh7th/vim-vsnip-integ",
+  "hrsh7th/cmp-cmdline",
+  -- "sdras/vue-vscode-snippets",
+  "rafamadriz/friendly-snippets",
+  -- "run-at-scale/vscode-terraform-doc-snippets",
+}
+
+local trial = {
+  "nvim-pack/nvim-spectre",
+  "ThePrimeagen/refactoring.nvim",
+  -- "jose-elias-alvarez/null-ls.nvim", -- didn't work consistently try again later
+  "nvim-orgmode/orgmode",
+}
+
+local db = {
+  "tpope/vim-dadbod",
+  "kristijanhusak/vim-dadbod-ui",
+}
+
+-- nothing under developement
+-- local localplugins = {
+-- }
+
+local packer = require("packer")
+packer.startup({
+  {
+    init,
+    lsp,
+    git,
+    misc,
+    fzf,
+    completion,
+    themes,
+    ui,
+    text,
+    lang,
+    trial,
+    test,
+    -- db,
+    -- localplugins
+  },
+  config = {
+    compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
+    --   display = {
+    --     open_fn = require("packer.util"),
+    --   },
+  },
+})

@@ -1,0 +1,6 @@
+require("settings.options")
+require("settings.globals")
+require("settings.autocmds")
+require("settings.keybinds")
+require("settings.packages")
+require("settings.fold")
