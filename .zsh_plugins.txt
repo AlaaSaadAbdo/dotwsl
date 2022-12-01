@@ -1,0 +1,18 @@
+zigius/expand-ealias.plugin.zsh
+
+wfxr/forgit
+mollifier/cd-gitroot
+robbyrussell/oh-my-zsh path:plugins/gitfast
+robbyrussell/oh-my-zsh path:plugins/extract
+robbyrussell/oh-my-zsh path:plugins/fasd
+wookayin/fzf-fasd
+
+Aloxaf/fzf-tab
+
+zsh-users/zsh-completions
+zsh-users/zsh-history-substring-search
+MichaelAquilina/zsh-auto-notify
+kutsan/zsh-system-clipboard
+
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting

@@ -1,0 +1,88 @@
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+alias -- -='cd -'
+alias 1='cd -'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+alias _=sudo
+alias _complete=_bash_comp
+alias _expand=_bash_expand
+alias d='dirs -v | head -10'
+alias finf='grep -irnw . -e'
+alias g=git
+alias gcm='git checkout master'
+alias 'gcn!'='git commit -v --no-edit --amend'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gfo='git fetch origin'
+alias ggpull='git pull origin $(git_current_branch)'
+alias gl='git pull'
+alias gpd='git push --dry-run'
+alias kcuc='k config use-context'
+alias l='exa -abghHl'
+alias which-command=whence
+alias ovim="\vim"
+alias nvrc="nvim ~/.config/nvim/init.lua"
+alias kssh='kitty +kitten ssh'
+alias weather="curl wttr.in"
+alias lnote="notes ls | fzf --preview 'bat --style=numbers --color=always {}' --preview-window wrap | xargs -o nvim"
+alias kitty_color="\ls ~/.config/kitty/kitty-themes/themes | fzf | xargs -I {} kitty @ set-colors -a "~/.config/kitty/kitty-themes/themes/{}""
+alias gpullall='find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;'
+alias kgd="git difftool --no-symlinks --dir-diff"
+alias kdiff="kitty +kitten diff"
+alias fk="fuck"
+alias cdu="cd-gitroot"
+alias tf="~/notes/.scripts/todo_finder.sh"
+alias krc="nvim ~/.config/kitty/kitty.conf"
+alias spass='gopass show $(gopass list -f | fzf )'
+# The command alias to start the browser-sync server
+
+ealias dotfiles="homeshick track dotfiles"
+ealias pawless="source <(awless completion zsh)"
+ealias gad='git add'
+ealias gst='git status'
+ealias gapa='git add --patch'
+ealias gcl='git clone --recursive'
+ealias gcmsg='git commit -m'
+ealias gitc='git commit'
+ealias gp='git push'
+ealias gup='git pull --rebase'
+ealias gupv='git pull --rebase -v'
+ealias md='mkdir -p'
+ealias vim="nvim"
+ealias vi="nvim"
+ealias v="nvim"
+ealias e="nvim"
+ealias vimdiff='nvim -d'
+ealias tp="trash-put"
+ealias e_alias="nvim ~/.zsh/zshalias"
+ealias e_zshrc="nvim ~/.zshrc"
+ealias dotfiles="homeshick track dotfiles"
+ealias agvim='nvim -c "Ag"'
+ealias ltree='exa -bghHl --tree'
+ealias ls="exa"
+ealias git-pull-all="npx git-pull-all"
+ealias forro="cd ~/alaa/Forró"
+ealias raw_forro="cd ~/alaa/Forró/Music/raw"
+ealias ytdl_mp3="youtube-dl --extract-audio --audio-format mp3"
+ealias gtop='gotop -b'
+ealias p_git="ssh-add -D; ssh-add -K ~/.ssh/id_rsa_personal"
+ealias w_git="ssh-add -D; ssh-add -K ~/.ssh/id_rsa"
+ealias p_gopass="gopass new --store personal"
+ealias sync_p_gopass="p_git; gopass git push origin master --store personal; w_git"
+ealias fzf_git='git show $(git log --pretty=oneline | fzf | cut -d=" " -f1)'
+
+
+# ealias pull_all="find . -maxdepth 2 -name .git -type d | rev | cut -c 6- | rev | xargs -i sh -c 'echo " "  && git -C {} config --get remote.origin.url && git -C {} pull --rebase'"
+
+# OTR Stuff
+
+alias oget="source ~/.otr && ~/projects/otr/vault/vget/vget"
+ealias ukc="aws eks --region eu-central-1 update-kubeconfig --name otr"
+ealias skc="kubectl config set-context --current --namespace=mbd-otr-int"
