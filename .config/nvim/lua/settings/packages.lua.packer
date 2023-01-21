@@ -1,32 +1,22 @@
--- local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
---
--- if fn.empty(fn.glob(install_path)) > 0 then
---   exec("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
---   exec("packadd packer.nvim")
--- end
---
--- cmd("packadd packer.nvim")
---
--- cmd("au BufWritePost packages.lua PackerCompile")
---
--- local init = {
---   -- Packer can manage itself as an optional plugin
---   "wbthomason/packer.nvim",
---   opt = true,
--- }
+local exec = vim.api.nvim_command
+local fn, cmd = vim.fn, vim.cmd
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+  exec("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  exec("packadd packer.nvim")
 end
-vim.opt.rtp:prepend(lazypath)
+
+cmd("packadd packer.nvim")
+
+cmd("au BufWritePost packages.lua PackerCompile")
+
+local init = {
+  -- Packer can manage itself as an optional plugin
+  "wbthomason/packer.nvim",
+  opt = true,
+}
 
 local lsp = {
   "nvim-lua/plenary.nvim",
@@ -35,7 +25,7 @@ local lsp = {
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
   "tsuyoshicho/vim-efm-langserver-settings", -- trying to use it for linting
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
   "nvim-treesitter/nvim-treesitter-refactor",
   "folke/lsp-colors.nvim",
   "folke/trouble.nvim",
@@ -93,7 +83,7 @@ local misc = {
       end, {})
     end,
   },
-  -- "lewis6991/impatient.nvim",
+  "lewis6991/impatient.nvim",
   "antoinemadec/FixCursorHold.nvim",
   "simrat39/symbols-outline.nvim",
   "nvim-telescope/telescope.nvim",
@@ -112,7 +102,7 @@ local text = {
 }
 
 local fzf = {
-  { "junegunn/fzf", build = "./install --all" }, -- Fuzzy Searcher
+  { "junegunn/fzf", run = "./install --all" }, -- Fuzzy Searcher
   "junegunn/fzf.vim",
 }
 
@@ -123,7 +113,7 @@ local test = {
 local themes = {
   "sainnhe/gruvbox-material",
   "sainnhe/everforest",
-  { "akinsho/toggleterm.nvim" },
+  { "akinsho/toggleterm.nvim", tag = "*" },
   { "rose-pine/neovim", as = "rose-pine" },
   { "wuelnerdotexe/vim-enfocado" },
 }
@@ -153,7 +143,9 @@ local completion = {
   "hrsh7th/vim-vsnip",
   "hrsh7th/vim-vsnip-integ",
   "hrsh7th/cmp-cmdline",
+  -- "sdras/vue-vscode-snippets",
   "rafamadriz/friendly-snippets",
+  -- "run-at-scale/vscode-terraform-doc-snippets",
 }
 
 local trial = {
@@ -172,20 +164,28 @@ local db = {
 -- local localplugins = {
 -- }
 
-local lazy = require("lazy")
-lazy.setup({
-  -- init,
-  lsp,
-  git,
-  misc,
-  fzf,
-  completion,
-  themes,
-  ui,
-  text,
-  lang,
-  trial,
-  test,
-  -- db,
-  -- localplugins
+local packer = require("packer")
+packer.startup({
+  {
+    init,
+    lsp,
+    git,
+    misc,
+    fzf,
+    completion,
+    themes,
+    ui,
+    text,
+    lang,
+    trial,
+    test,
+    -- db,
+    -- localplugins
+  },
+  config = {
+    compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
+    --   display = {
+    --     open_fn = require("packer.util"),
+    --   },
+  },
 })

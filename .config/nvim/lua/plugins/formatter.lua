@@ -1,5 +1,3 @@
-vim.cmd([[packadd formatter.nvim]])
-
 local prettier = function()
   return {
     exe = "prettier",

@@ -31,7 +31,8 @@ vim.cmd("nnoremap ,l :res -10<CR>")
 
 vim.cmd("tmap <C-o> <C-\\><C-n>")
 
-vim.cmd("nnoremap <leader>r :lua reload()<CR>")
+-- vim.cmd("nnoremap <leader>r :lua reload()<CR>")
+vim.cmd("nnoremap <leader>r :lua reloadConfig()<CR>")
 
 -- nvimtree
 map("n", "<leader>l", ":NvimTreeToggle<CR>", { noremap = true })
@@ -83,6 +84,10 @@ vim.cmd("command! -bang -nargs=? -complete=dir DFiles call fzf#vim#files('~/.con
 
 vim.cmd(
   "command! -bang -nargs=* HRg call fzf#vim#grep('rg --column --line-number --hidden --no-ignore --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 2, fzf#vim#with_preview(), <bang>0)"
+)
+
+vim.cmd(
+  "command! -bang -nargs=* Rg2 call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)"
 )
 
 map("n", "<Leader>bb", ":Buffers<CR>", { noremap = true, silent = true })
@@ -142,3 +147,6 @@ vim.api.nvim_set_keymap(
 vim.keymap.set({ "n", "x" }, "<leader>sr", function()
   require("ssr").open()
 end)
+
+-- rooter
+vim.cmd("nmap <silent> ,rr :Rooter<CR>")
